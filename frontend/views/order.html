@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <a class="navbar-brand" href="#">Specijal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto"> 
+                <li class="nav-item">
+                    <a href="C:\Users\HP\Specijal_web_project\frontend\index.html" class="nav-link" id="home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/products.html" class="nav-link" id="productsLink">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/order.html" class="nav-link"id="orderLink">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/about.html"  class="nav-link"id="aboutLink">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a  href="C:\Users\HP\Specijal_web_project\frontend\views/contact.html"class="nav-link" id="contactLink">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a  href="C:\Users\HP\Specijal_web_project\frontend\views\login.html"class="nav-link" id="loginLink">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+ 
+
+    <div class="container mt-5">
+        <h2 class="text-center">Place Your Order</h2>
+        <form>
+            <div class="mb-3">
+                <label for="product" class="form-label">Select Product</label>
+                <select class="form-select" id="product">
+                    <option value="1">ICE CREAM</option>
+                    <option value="2">WAFFLES</option>
+                    <option value="3">SUNDAES </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="quantity" min="1" value="1">
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Delivery Address</label>
+                <textarea class="form-control" id="address" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Order</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

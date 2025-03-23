@@ -1,0 +1,158 @@
+/* General Styling */
+body {
+    background-color: #3C8DAD ;
+    color: #cd2222;
+    font-family: 'Lobster', cursive; 
+    padding-top: 70px;
+}
+
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    column-gap: 1.5rem;
+    transition: all 0.3s ease-in-out;
+    padding: 17px 20px;
+    border-radius: 2rem;
+}
+
+
+
+.navbar.fixed-top {
+    background-color: #2C2C2C ; /*navbar color*/
+    box-shadow: 0 4px 10px #FFFFFF;
+    z-index: 1000;
+}
+
+/* Navbar Links */
+.nav-link {
+    font-size: 0.88rem;
+    font-family: 'Poppins', sans-serif;
+    transition: color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.nav-link:hover {
+    color: #FF5733; /* Change on hover */
+}
+
+/* Navbar Icons */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+}
+
+.nav-icons .bx {
+    color: #f83d13; /* Icon color */
+    font-size: 20px;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    animation: fadeIn 2.5s ease-in-out;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #00000080; 
+    z-index: -1;
+}
+
+/* Product Images */
+.product-img {
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-img:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+/* Buttons */
+.btn-primary {
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #d76e05;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(255, 87, 51, 0.5); 
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sections Fade-in on Scroll */
+section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease-in-out;
+}
+
+section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    
+}
+
+/* Customer Testimonials Section */
+.bg-light {
+    background-color: #ecf0f1 ; 
+    color :#0e0e0f;
+}
+
+.container.text-center h2 {
+    color: #0c0c0c; /* Heading color in testimonial section */
+}
+
+/* Content for each page */
+section.container h2 {
+    color: #f3eeee; /*Treat yourself text */
+}
+
+p {
+    color: #070606;
+}
+
+#content {
+    transition: all 0.3s ease-in-out;
+    transform: scale(1);
+    opacity: 1;
+}
+
+#content.fade-out {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+#content.fade-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+/*connect other pages to css
+edit colors*/
