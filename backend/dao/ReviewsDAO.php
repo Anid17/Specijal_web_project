@@ -7,9 +7,16 @@ class ReviewDAO {
         $this->conn = $db;
     }
 
-    public function getAll() {
-        $query = "SELECT * FROM " . $this->table;
-        return $this->conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+  public function getAll() {
+        $stmt = $this->conn->prepare("SELECT * FROM reviews");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }  
+
+    public function getById($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM reviews WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function create($data) {
@@ -30,3 +37,6 @@ class ReviewDAO {
         return $stmt->execute([$id]);
     }
 }
+    
+    
+    

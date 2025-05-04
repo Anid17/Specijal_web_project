@@ -8,9 +8,18 @@ class OrderDAO {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM " . $this->table;
-        return $this->conn->query($query)->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->conn->prepare("SELECT * FROM orders");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    
+    public function getById($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM orders WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 
     public function create($data) {
         $query = "INSERT INTO orders (user_id, product_id, quantity, total_price, order_date) VALUES (?, ?, ?, ?, ?)";
@@ -30,3 +39,4 @@ class OrderDAO {
         return $stmt->execute([$id]);
     }
 }
+

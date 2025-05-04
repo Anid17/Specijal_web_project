@@ -22,6 +22,7 @@ class ProductDAO {
         }
     }
 
+
     public function getAll() {
         $sql = "SELECT * FROM " . $this->table;
         $stmt = $this->conn->prepare($sql);
@@ -54,7 +55,7 @@ class ProductDAO {
     }
 
     public function delete($id) {
-        $sql = "DELETE FROM " . $this->table . " WHERE id = :id";
+        $sql = "DELETE FROM products WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id);
 
@@ -66,5 +67,4 @@ class ProductDAO {
         }
     }
 }
-
 ?>
