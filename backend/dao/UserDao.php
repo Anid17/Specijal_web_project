@@ -66,5 +66,18 @@ class UserDAO {
             throw new Exception("Error deleting user: " . $e->getMessage());
         }
     }
+
+    public function get_user_by_email($email) {
+    try {
+        $sql = "SELECT * FROM " . $this->table . " WHERE email = :email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC); // returns false if not found
+    } catch (Exception $e) {
+        throw new Exception("Error fetching user by email: " . $e->getMessage());
+    }
+}
+
 }
 ?>

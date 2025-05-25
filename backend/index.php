@@ -1,7 +1,8 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
-
+require_once __DIR__ . '/routes/auth_routes.php';
+require_once __DIR__ . '/middleware/JwtMiddleware.php';
 require_once __DIR__ . '/config/Database.php';
 
 Flight::set('db', (new Database())->connect());

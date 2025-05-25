@@ -8,11 +8,14 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 </head>
 
-<body>
+<body class="modern-body">
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #FF9800;">
+
         <a class="navbar-brand" href="#">Specijal</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -37,6 +40,13 @@
                 <li class="nav-item">
                     <a  href="C:\Users\HP\Specijal_web_project\frontend\views\login.html"class="nav-link" id="loginLink">Login</a>
                 </li>
+                <li class="nav-item d-none" id="adminPanelLink">
+  <a href="views/admin.html" class="nav-link text-danger font-weight-bold">Admin Panel</a>
+</li>
+<li class="nav-item d-none" id="logoutLink">
+  <a href="#" class="nav-link text-danger" onclick="logout()">Logout</a>
+</li>
+
             </ul>
         </div>
     </nav>
@@ -77,7 +87,7 @@
     </section>
 
     <!-- Customer Reviews (needs some editing) -->
-    <section class="bg-light py-5">
+    <section class="modern-section py-5">
         <div class="container text-center">
             <h2>What Our Customers Say</h2>
             <p>"Best ice cream I've ever had! The flavors are amazing!" – <strong>Amir</strong></p>
@@ -92,7 +102,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-light text-center py-3">
+    <footer class=" modern-footer text-center py-3">
         <p>&copy; 2025 Specijal Ice Cream Shop. All rights reserved.</p>
         <p>📞 Phone: 032-666-292 | 📷 Instagram: <a href="https://www.instagram.com/specijal" target="_blank">@specijal</a></p>
     </footer>
@@ -101,6 +111,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script src="js/auth.js"></script>
+<script>
+  window.onload = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      document.getElementById("loginLink")?.classList.add("d-none");
+      document.getElementById("logoutLink")?.classList.remove("d-none");
+
+      if (user.role === "admin") {
+        document.getElementById("adminPanelLink")?.classList.remove("d-none");
+      }
+    }
+  };
+</script>
+
 
 </body>
 

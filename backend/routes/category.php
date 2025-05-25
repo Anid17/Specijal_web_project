@@ -1,67 +1,13 @@
 <?php
 require_once '../config/database.php';
 require_once '../dao/CategoryDAO.php';
+require_once '../services/AuthService.php';
+require_once '../middleware/JwtMiddleware.php';
 
 $dao = new CategoryDAO((new Database())->connect());
 $method = $_SERVER['REQUEST_METHOD'];
 
 header("Content-Type: application/json");
-
-/**
- * @OA\Get(
- *     path="/api/category",
- *     summary="Get all categories or a single category by ID",
- *     @OA\Parameter(
- *         name="id",
- *         in="query",
- *         description="Category ID",
- *         required=false,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(response=200, description="Success")
- * )
- *
- * @OA\Post(
- *     path="/api/category",
- *     summary="Create a new category",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             required={"name", "description"},
- *             @OA\Property(property="name", type="string"),
- *             @OA\Property(property="description", type="string")
- *         )
- *     ),
- *     @OA\Response(response=200, description="Category created")
- * )
- *
- * @OA\Put(
- *     path="/api/category",
- *     summary="Update an existing category",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             required={"id", "name", "description"},
- *             @OA\Property(property="id", type="integer"),
- *             @OA\Property(property="name", type="string"),
- *             @OA\Property(property="description", type="string")
- *         )
- *     ),
- *     @OA\Response(response=200, description="Category updated")
- * )
- *
- * @OA\Delete(
- *     path="/api/category",
- *     summary="Delete a category",
- *     @OA\Parameter(
- *         name="id",
- *         in="query",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(response=200, description="Category deleted")
- * )
- */
 
 switch ($method) {
     case 'GET':
@@ -73,6 +19,15 @@ switch ($method) {
         break;
 
     case 'POST':
+        Flight::authenticate();
+        $user = Flight::get('user');
+
+        if ($user['role'] !== 'admin') {
+            http_response_code(403);
+            echo json_encode(["message" => "Only admins can create categories"]);
+            exit;
+        }
+
         $data = json_decode(file_get_contents("php://input"), true);
         if ($dao->create($data['name'], $data['description'])) {
             echo json_encode(["message" => "Category created"]);
@@ -83,6 +38,15 @@ switch ($method) {
         break;
 
     case 'PUT':
+        Flight::authenticate();
+        $user = Flight::get('user');
+
+        if ($user['role'] !== 'admin') {
+            http_response_code(403);
+            echo json_encode(["message" => "Only admins can update categories"]);
+            exit;
+        }
+
         $data = json_decode(file_get_contents("php://input"), true);
         if ($dao->update($data['id'], $data['name'], $data['description'])) {
             echo json_encode(["message" => "Category updated"]);
@@ -93,6 +57,15 @@ switch ($method) {
         break;
 
     case 'DELETE':
+        Flight::authenticate();
+        $user = Flight::get('user');
+
+        if ($user['role'] !== 'admin') {
+            http_response_code(403);
+            echo json_encode(["message" => "Only admins can delete categories"]);
+            exit;
+        }
+
         if (isset($_GET['id']) && $dao->delete($_GET['id'])) {
             echo json_encode(["message" => "Category deleted"]);
         } else {

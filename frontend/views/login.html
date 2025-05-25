@@ -1,110 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Specijal</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Specijal</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <a class="navbar-brand" href="#">Specijal</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto"> 
-                <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\index.html" class="nav-link" id="home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/products.html" class="nav-link" id="productsLink">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/order.html" class="nav-link"id="orderLink">Order</a>
-                </li>
-                <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/about.html"  class="nav-link"id="aboutLink">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a  href="C:\Users\HP\Specijal_web_project\frontend\views/contact.html"class="nav-link" id="contactLink">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a  href="C:\Users\HP\Specijal_web_project\frontend\views\login.html"class="nav-link" id="loginLink">Login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h3 class="text-center">Login</h3>
-                        <form>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                            </div>
-                            <div class="mb-3 text-center">
-                                <button type="submit" class="btn btn-primary w-100">Login</button>
-                            </div>
-                        </form>
-                        <div class="text-center mt-3">
-                            <p>Don't have an account? <a href="register.html">Register here</a></p>
-                        </div>
-                    </div>
-                </div>
+  <div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h3 class="text-center">Login</h3>
+            <form id="login-form">
+              <div class="mb-3">
+                <label for="login-email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="login-email" placeholder="Enter email" required />
+              </div>
+              <div class="mb-3">
+                <label for="login-password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="login-password" placeholder="Enter password" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="text-center mt-3">
+              <p>Don't have an account? <a href="register.html">Register here</a></p>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function storeAuthData(token, user) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+    }
 
-    <script>
-        document.querySelector("form").addEventListener("submit", async function(e) {
-            e.preventDefault();
-        
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value;
-        
-            try {
-                const response = await fetch("http://localhost:3000/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
-        
-                const data = await response.json();
-        
-                if (response.ok) {
-                    alert("Login successful!");
-                    // Optional: redirect to home or dashboard
-                    window.location.href = "../index.html";
-                } else {
-                    alert("Login failed: " + data.message);
-                }
-        
-            } catch (error) {
-                alert("Error logging in.");
-                console.error(error);
-            }
-        });
-        </script>
-        
+    document.getElementById("login-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        storeAuthData(result.token, result.user);
+        alert("Login successful!");
+
+        // Redirect based on role (optional)
+        if (result.user.role === "admin") {
+          window.location.href = "admin.html";
+        } else {
+          window.location.href = "index.html";
+        }
+      } else {
+        alert(result.message || "Login failed.");
+      }
+    });
+  </script>
 </body>
 </html>

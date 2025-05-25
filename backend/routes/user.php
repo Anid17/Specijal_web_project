@@ -1,79 +1,77 @@
 <?php
-require_once '../config/Database.php';
-require_once '../dao/UserDAO.php';
+require_once __DIR__ . '/../dao/UserDAO.php';
 
-$dao = new UserDAO((new Database())->connect());
-$method = $_SERVER['REQUEST_METHOD'];
+Flight::route('GET /users', function () {
+    Flight::authenticate(); // ⛔ must be logged in
+    $user = Flight::get('user');
 
-header('Content-Type: application/json');
+    if ($user['role'] !== 'admin') {
+        Flight::halt(403, 'Access denied');
+    }
 
-switch ($method) {
-    case 'GET':
-        try {
-            $users = $dao->getAll();
-            echo json_encode(["status" => "success", "data" => $users]);
-        } catch (Exception $e) {
-            echo json_encode(["status" => "error", "message" => "Failed to fetch users: " . $e->getMessage()]);
-        }
-        break;
+    $dao = new UserDAO(Flight::get('db'));
+    Flight::json($dao->getAll());
+});
 
-    case 'POST':
-        $data = json_decode(file_get_contents("php://input"), true);
+Flight::route('POST /users', function () {
+    Flight::authenticate();
+    $user = Flight::get('user');
 
-        if (!isset($data['name'], $data['email'], $data['password'])) {
-            echo json_encode(["status" => "error", "message" => "Missing required fields."]);
-            break;
-        }
+    if ($user['role'] !== 'admin') {
+        Flight::halt(403, 'Only admins can create users');
+    }
 
-        // Validate email format
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(["status" => "error", "message" => "Invalid email format."]);
-            break;
-        }
+    $data = Flight::request()->data->getData();
 
-        try {
-            $response = $dao->create($data['name'], $data['email'], $data['password']);
-            echo json_encode($response ? ["status" => "success", "message" => "User created successfully."] : ["status" => "error", "message" => "Failed to create user."]);
-        } catch (Exception $e) {
-            echo json_encode(["status" => "error", "message" => "Error: " . $e->getMessage()]);
-        }
-        break;
+    if (!isset($data['name'], $data['email'], $data['password'])) {
+        Flight::halt(400, 'Missing required fields');
+    }
 
-    case 'PUT':
-        $data = json_decode(file_get_contents("php://input"), true);
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        Flight::halt(400, 'Invalid email format');
+    }
 
-        if (!isset($data['id'], $data['name'], $data['email'])) {
-            echo json_encode(["status" => "error", "message" => "Missing required fields."]);
-            break;
-        }
+    $dao = new UserDAO(Flight::get('db'));
+    $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+    $dao->create($data['name'], $data['email'], $hashedPassword);
 
-        // Validate email format
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            echo json_encode(["status" => "error", "message" => "Invalid email format."]);
-            break;
-        }
+    Flight::json(['message' => 'User created successfully']);
+});
 
-        try {
-            $response = $dao->update($data['id'], $data['name'], $data['email'], $data['password'] ?? null);
-            echo json_encode($response ? ["status" => "success", "message" => "User updated successfully."] : ["status" => "error", "message" => "Failed to update user."]);
-        } catch (Exception $e) {
-            echo json_encode(["status" => "error", "message" => "Error: " . $e->getMessage()]);
-        }
-        break;
+Flight::route('PUT /users', function () {
+    Flight::authenticate();
+    $user = Flight::get('user');
 
-    case 'DELETE':
-        $id = $_GET['id'] ?? null;
+    if ($user['role'] !== 'admin') {
+        Flight::halt(403, 'Only admins can update users');
+    }
 
-        if ($id) {
-            try {
-                $response = $dao->delete($id);
-                echo json_encode($response ? ["status" => "success", "message" => "User deleted successfully."] : ["status" => "error", "message" => "Failed to delete user."]);
-            } catch (Exception $e) {
-                echo json_encode(["status" => "error", "message" => "Error: " . $e->getMessage()]);
-            }
-        } else {
-            echo json_encode(["status" => "error", "message" => "User ID is required."]);
-        }
-        break;
-}
-?>
+    $data = Flight::request()->data->getData();
+
+    if (!isset($data['id'], $data['name'], $data['email'])) {
+        Flight::halt(400, 'Missing required fields');
+    }
+
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        Flight::halt(400, 'Invalid email format');
+    }
+
+    $dao = new UserDAO(Flight::get('db'));
+    $dao->update($data['id'], $data['name'], $data['email'], $data['password'] ?? null);
+
+    Flight::json(['message' => 'User updated successfully']);
+});
+
+Flight::route('DELETE /users/@id', function ($id) {
+    Flight::authenticate();
+    $user = Flight::get('user');
+
+    if ($user['role'] !== 'admin') {
+        Flight::halt(403, 'Only admins can delete users');
+    }
+
+    $dao = new UserDAO(Flight::get('db'));
+    $dao->delete($id);
+
+    Flight::json(['message' => 'User deleted successfully']);
+});
