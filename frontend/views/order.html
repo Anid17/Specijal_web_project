@@ -3,110 +3,115 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Order Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <title>Order Page - Specijal</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="modern-body">
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-  <a class="navbar-brand" href="#">Specijal</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
-      <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
-      <li class="nav-item"><a href="order.html" class="nav-link">Order</a></li>
-      <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
-      <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-      <li class="nav-item" id="loginLink"><a href="login.html" class="nav-link">Login</a></li>
-      <li class="nav-item d-none" id="adminPanelLink">
-        <a href="admin.html" class="nav-link text-danger font-weight-bold">Admin Panel</a>
-      </li>
-      <li class="nav-item d-none" id="logoutLink">
-        <a href="#" onclick="logout()" class="nav-link text-danger">Logout</a>
-      </li>
-    </ul>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #FF9800;">
+    <a class="navbar-brand" href="#">Specijal</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+        <li class="nav-item"><a href="order.html" class="nav-link">Order</a></li>
+        <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item" id="loginLink"><a href="login.html" class="nav-link">Login</a></li>
+        <li class="nav-item d-none" id="adminPanelLink">
+          <a href="admin.html" class="nav-link text-danger font-weight-bold">Admin Panel</a>
+        </li>
+        <li class="nav-item d-none" id="logoutLink">
+          <a href="#" onclick="logout()" class="nav-link text-danger">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Order Form -->
+  <div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow" style="background-color: #fff3e0; border-radius: 15px;">
+          <div class="card-body p-4">
+            <h3 class="text-center mb-4" style="color: #FF9800;">Place Your Order</h3>
+            <form id="order-form">
+              <div class="mb-3">
+                <label for="product" class="form-label" style="color: #333;">Select Product</label>
+                <select class="form-select form-control" id="product">
+                  <option value="1">ICE CREAM</option>
+                  <option value="2">WAFFLES</option>
+                  <option value="3">SUNDAES</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="quantity" class="form-label" style="color: #333;">Quantity</label>
+                <input type="number" class="form-control" id="quantity" min="1" value="1" />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label" style="color: #333;">Delivery Address</label>
+                <textarea class="form-control" id="address" rows="3" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-warning w-100">Submit Order</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</nav>
 
-<div class="container mt-5 pt-5">
-  <h2 class="text-center">Place Your Order</h2>
-  <form id="order-form">
-    <div class="mb-3">
-      <label for="product" class="form-label">Select Product</label>
-      <select class="form-select" id="product">
-        <option value="1">ICE CREAM</option>
-        <option value="2">WAFFLES</option>
-        <option value="3">SUNDAES</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="quantity" class="form-label">Quantity</label>
-      <input type="number" class="form-control" id="quantity" min="1" value="1" />
-    </div>
-    <div class="mb-3">
-      <label for="address" class="form-label">Delivery Address</label>
-      <textarea class="form-control" id="address" rows="3"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit Order</button>
-  </form>
-</div>
+  <!-- Auth Check + Script -->
+  <script src="../js/auth.js"></script>
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      document.getElementById("loginLink")?.classList.add("d-none");
+      document.getElementById("logoutLink")?.classList.remove("d-none");
 
-<script src="../js/auth.js"></script>
-<script>
-  // Check login + show role-based UI
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user) {
-    document.getElementById("loginLink")?.classList.add("d-none");
-    document.getElementById("logoutLink")?.classList.remove("d-none");
-
-    if (user.role === "admin") {
-      document.getElementById("adminPanelLink")?.classList.remove("d-none");
-    }
-  } else {
-    // Redirect to login if not logged in
-    alert("You must be logged in to place an order.");
-    window.location.href = "login.html";
-  }
-
-  // Submit order
-  document.getElementById("order-form").addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const product = document.getElementById("product").value;
-    const quantity = document.getElementById("quantity").value;
-    const address = document.getElementById("address").value;
-
-    try {
-      const response = await fetch("/api/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("token")
-        },
-        body: JSON.stringify({
-          product_id: product,
-          quantity: quantity,
-          address: address
-        })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Order placed successfully!");
-      } else {
-        alert("Order failed: " + (data.message || "Unknown error"));
+      if (user.role === "admin") {
+        document.getElementById("adminPanelLink")?.classList.remove("d-none");
       }
-    } catch (error) {
-      alert("Error submitting order.");
-      console.error(error);
+    } else {
+      alert("You must be logged in to place an order.");
+      window.location.href = "login.html";
     }
-  });
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    document.getElementById("order-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const product = document.getElementById("product").value;
+      const quantity = document.getElementById("quantity").value;
+      const address = document.getElementById("address").value;
+
+      try {
+        const response = await fetch("/api/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+          },
+          body: JSON.stringify({ product_id: product, quantity, address })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("Order placed successfully!");
+        } else {
+          alert("Order failed: " + (data.message || "Unknown error"));
+        }
+      } catch (error) {
+        alert("Error submitting order.");
+        console.error(error);
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

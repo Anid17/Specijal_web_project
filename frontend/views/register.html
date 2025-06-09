@@ -6,6 +6,21 @@
   <title>Register - Specijal</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background-color: #fff8e1;
+    }
+    .card-body {
+      background-color: #fff7e6;
+      color: #212529;
+    }
+    label, .form-label, p, a {
+      color: #333;
+    }
+    h3 {
+      color: #e65100;
+    }
+  </style>
 </head>
 <body>
   <div class="container mt-5 pt-5">
@@ -13,27 +28,28 @@
       <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h3 class="text-center">Register</h3>
+            <h3 class="text-center mb-4">Create Account</h3>
             <form id="register-form">
               <div class="mb-3">
                 <label for="reg-name" class="form-label">Username</label>
-                <input type="text" class="form-control" id="reg-name" placeholder="Create a username" required />
+                <input type="text" class="form-control" id="reg-name" placeholder="Enter username" required />
               </div>
               <div class="mb-3">
                 <label for="reg-email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="reg-email" placeholder="Enter your email" required />
+                <input type="email" class="form-control" id="reg-email" placeholder="Enter email" required />
               </div>
               <div class="mb-3">
                 <label for="reg-password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="reg-password" placeholder="Create a password" required />
+                <input type="password" class="form-control" id="reg-password" placeholder="Enter password" required />
               </div>
-              <button type="submit" class="btn btn-primary w-100">Register</button>
+              <button type="submit" class="btn btn-warning w-100">Register</button>
             </form>
             <div class="text-center mt-3">
-              <p>Already have an account? <a href="login.html">Login here</a></p>
+              <p>Already have an account? <a href="login.html" class="text-primary font-weight-bold">Login here</a></p>
             </div>
           </div>
         </div>
+      <a href="../index.html" class="text-secondary">← Back to Home</a>
       </div>
     </div>
   </div>

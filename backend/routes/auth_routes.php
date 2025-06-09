@@ -12,7 +12,7 @@ Flight::route('POST /register', function () {
         Flight::halt(409, 'Email already exists');
     }
 
-    // Hash the password
+    // Hash  password
     $hashedPassword = AuthService::hashPassword($data['password']);
     $userDao->create($data['name'], $data['email'], $hashedPassword);
 

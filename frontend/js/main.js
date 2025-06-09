@@ -62,3 +62,33 @@ function revealSections() {
 
 // Listen for scroll to reveal sections
 window.addEventListener("scroll", revealSections);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    loadDashboard();
+  } else {
+    loadLogin();
+  }
+});
+
+function loadDashboard() {
+  fetch('views/dashboard.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('app').innerHTML = html;
+      // Load JS per view
+      const script = document.createElement('script');
+      script.src = 'js/dashboard.js';
+      document.body.appendChild(script);
+    });
+}
+
+function loadLogin() {
+  fetch('views/login.html')
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('app').innerHTML = html;
+    });
+}
