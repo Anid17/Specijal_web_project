@@ -17,7 +17,7 @@ Flight::route('GET /api/products/@id', function ($id) {
 });
 
 Flight::route('POST /api/products', function () {
-    Flight::authenticate(); // ⛔ Require token
+    Flight::authenticate(); 
     $user = Flight::get('user');
 
     if ($user['role'] !== 'admin') {

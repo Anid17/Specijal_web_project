@@ -23,22 +23,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto"> 
                 <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\index.html" class="nav-link" id="home">Home</a>
+                    <a href="index.html" class="nav-link" id="home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/products.html" class="nav-link" id="productsLink">Products</a>
+                    <a href="views/products.html" class="nav-link" id="productsLink">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/order.html" class="nav-link"id="orderLink">Order</a>
+                    <a href="views/order.html" class="nav-link"id="orderLink">Order</a>
                 </li>
                 <li class="nav-item">
-                    <a href="C:\Users\HP\Specijal_web_project\frontend\views/about.html"  class="nav-link"id="aboutLink">About Us</a>
+                    <a href="views/about.html"  class="nav-link"id="aboutLink">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a  href="C:\Users\HP\Specijal_web_project\frontend\views/contact.html"class="nav-link" id="contactLink">Contact</a>
+                    <a  href="views/contact.html"class="nav-link" id="contactLink">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a  href="C:\Users\HP\Specijal_web_project\frontend\views\login.html"class="nav-link" id="loginLink">Login</a>
+                    <a  href="login.html"class="nav-link" id="loginLink">Login</a>
                 </li>
                 <li class="nav-item d-none" id="adminPanelLink">
   <a href="views/admin.html" class="nav-link text-danger font-weight-bold">Admin Panel</a>
@@ -57,7 +57,7 @@
         <div class="container">
             <h1>Welcome to Specijal Ice Cream</h1>
             <p>The best ice cream in Jelah, made with love! 🍦</p>
-            <a href="file:///C:/Users/HP/Specijal_web_project/frontend/views/order.html" class="btn btn-primary btn-lg">Order Now</a>
+            <a href="views/order.html" class="btn btn-warning btn-lg">Order Now</a>
         </div>
     </section>
 
@@ -98,7 +98,7 @@
     <!-- order button -->
     <section class="text-center my-5">
         <h2>Ready to Order?</h2>
-        <a href="file:///C:/Users/HP/Specijal_web_project/frontend/views/order.html" class="btn btn-success btn-lg">Order Now</a>
+        <a href="/views/order.html" class="btn btn-warning btn-lg">Order Now</a>
     </section>
 
     <!-- Footer -->
@@ -115,17 +115,18 @@
     <script src="js/auth.js"></script>
 <script>
   window.onload = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
+    const role = localStorage.getItem("role");
+    if (role) {
       document.getElementById("loginLink")?.classList.add("d-none");
       document.getElementById("logoutLink")?.classList.remove("d-none");
 
-      if (user.role === "admin") {
+      if (role === "admin") {
         document.getElementById("adminPanelLink")?.classList.remove("d-none");
       }
     }
   };
 </script>
+
 
 
 </body>

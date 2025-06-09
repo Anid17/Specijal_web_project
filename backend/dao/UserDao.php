@@ -73,7 +73,7 @@ class UserDAO {
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC); // returns false if not found
+        return $stmt->fetch(PDO::FETCH_ASSOC); 
     } catch (Exception $e) {
         throw new Exception("Error fetching user by email: " . $e->getMessage());
     }
